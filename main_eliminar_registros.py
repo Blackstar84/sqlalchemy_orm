@@ -39,4 +39,8 @@ if __name__ == '__main__':
     
     session.commit()
     
-   
+    session.query(User).filter(
+        User.id == 1
+    ).delete()
+    
+    session.commit()
