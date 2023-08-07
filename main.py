@@ -43,6 +43,8 @@ if __name__ == '__main__':
     
     user1 = User(username='user1', email='user1@example.com')
     user2 = User(username='user2', email='user2@example.com')
+    user3 = User(username='user3', email='user3@example.com')
+    user4 = User(username='user4', email='user4@example.com')
     
     course1 = Course(title='Curso profesional de Base de datos')
     
@@ -58,7 +60,30 @@ if __name__ == '__main__':
     
     session.add(user1)
     session.add(user2)
+    session.add(user3)
+    session.add(user4)
     
     session.commit()
     
-    print(course1.id)
+    # Listar en consola todos los usuarios que posean por lo menos un curso (INNER JOIN )
+    # Listar en consola todos los usuarios sin cursos (LEFT JOIN)
+    
+    users = session.query(User).join(
+        Course
+    )
+    
+    users = session.query(User).join(
+        Course, User.id == Course.user_id
+    )
+    
+    for user in users:
+        print(user)
+        
+    users = session.query(User).outerjoin(
+        Course
+    ).filter(
+        Course.id == None
+    )
+    
+    for user in users:
+        print(user)
